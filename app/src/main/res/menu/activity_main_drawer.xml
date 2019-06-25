@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="My Profile" />
+        <item
+            android:id="@+id/dashBoard"
+            android:icon="@drawable/ic_border_all_black_24dp"
+            android:title="My DashBoard" />
+
+        <item
+            android:id="@+id/join"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="add or setup" />
+        <item
+            android:id="@+id/link"
+            android:icon="@drawable/ic_link_black_24dp"
+            android:title="linked accounts" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
