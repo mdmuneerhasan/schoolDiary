@@ -8,4 +8,7 @@
     <dimen name="large_margin">32dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="button_size">128dp</dimen>
+    <dimen name="register_text_size">24sp</dimen>
+    <dimen name="switch_padding">256dp</dimen>
+    <dimen name="elevation">1024dp</dimen>
 </resources>

@@ -18,12 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.multi.schooldiary.R;
 import com.multi.schooldiary.utility.Connection;
-import com.multi.schooldiary.utility.Storage;
+import com.multi.schooldiary.utility.SavedData;
 import com.squareup.picasso.Picasso;
 
 public class SetUpProfileFragment extends Fragment {
     EditText edtName,edtNumber,edtUrl;
-    Storage storage;
+    SavedData savedData;
     String stName,stNumber;
     ImageView imageView;
     Button btnSetUp;
@@ -42,11 +42,11 @@ public class SetUpProfileFragment extends Fragment {
         imageView=view.findViewById(R.id.imageView);
         edtNumber=view.findViewById(R.id.edtNumber);
         edtUrl=view.findViewById(R.id.edtUrl);
-        storage=new Storage(getContext());
-        edtName.setText(storage.getValue("name"));
-        edtNumber.setText(storage.getValue("number"));
-        edtUrl.setText(storage.getValue("photoUrl"));
-        Picasso.get().load(storage.getValue("photoUrl")).into(imageView);
+        savedData =new SavedData(getContext());
+        edtName.setText(savedData.getValue("name"));
+        edtNumber.setText(savedData.getValue("number"));
+        edtUrl.setText(savedData.getValue("photoUrl"));
+        Picasso.get().load(savedData.getValue("photoUrl")).into(imageView);
 
         btnSetUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,20 +84,19 @@ public class SetUpProfileFragment extends Fragment {
             edtNumber.setError("number too short");
             return;
         }
-        storage.showAlert("connecting...");
+        savedData.showAlert("connecting...");
         DatabaseReference ref=new Connection().getDbUser();
-        ref.child(storage.getValue("sid")).child("name").setValue(stName);
-        ref.child(storage.getValue("uid")).child("name").setValue(stName);
-        ref.child(storage.getValue("uid")).child("photoUrl").setValue(edtUrl.getText().toString());
-        ref.child(storage.getValue("uid")).child("number").setValue(stNumber).addOnCompleteListener(new OnCompleteListener<Void>() {
+        ref.child(savedData.getValue("uid")).child("name").setValue(stName);
+        ref.child(savedData.getValue("uid")).child("photoUrl").setValue(edtUrl.getText().toString());
+        ref.child(savedData.getValue("uid")).child("number").setValue(stNumber).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                storage.removeAlert();
-                storage.setValue("name",stName);
-                storage.setValue("number",stNumber);
-                storage.setValue("photoUrl",edtUrl.getText().toString());
+                savedData.removeAlert();
+                savedData.setValue("name",stName);
+                savedData.setValue("number",stNumber);
+                savedData.setValue("photoUrl",edtUrl.getText().toString());
                 getActivity().onBackPressed();
-                storage.toast("profile updated...");
+                savedData.toast("profile updated...");
             }
         });
     }

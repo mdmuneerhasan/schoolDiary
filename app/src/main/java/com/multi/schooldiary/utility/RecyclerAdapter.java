@@ -43,8 +43,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         holder.text4.setText(recyclerClass.getText4());
         holder.tvNotification.setText(recyclerClass.getTvNotification());
         try {
-            Picasso.get().load(recyclerClass.getUrl()).into(holder.imageView);
-        }catch (Exception e){}
+            if(recyclerClass.getUrl().trim().length()<2){
+                Picasso.get().load("https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png").into(holder.imageView);
+            }else{
+                Picasso.get().load(recyclerClass.getUrl()).into(holder.imageView);
+            }
+        }catch (Exception e){
+            Picasso.get().load("https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png").into(holder.imageView);
+        }
         click.onBindViewHolder(holder,arrayList.get(i));
     }
 
@@ -57,12 +63,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         public ImageView imageView;
         public TextView text1,text2,text3,text4,tvNotification,tvHeading;
         public Button btn1,btn2,btn3,btn4;
-        Spinner spinner;
         RelativeLayout relativeLayout;
         public Holder(@NonNull View itemView) {
             super(itemView);
             relativeLayout=itemView.findViewById(R.id.layout);
-            spinner=itemView.findViewById(R.id.spinner);
             imageView=itemView.findViewById(R.id.imageView);
             tvHeading=itemView.findViewById(R.id.tvHeading);
             text1=itemView.findViewById(R.id.tvText1);

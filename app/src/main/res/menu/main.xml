@@ -7,8 +7,18 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/console"
+        android:orderInCategory="199"
+        android:title="Console"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/set_default"
         android:orderInCategory="200"
         android:title="Set Default"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/faqs"
+        android:orderInCategory="300"
+        android:title="FAQs"
         app:showAsAction="never" />
 </menu>

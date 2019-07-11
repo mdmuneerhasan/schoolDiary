@@ -6,13 +6,12 @@ import com.multi.schooldiary.BuildConfig;
 
 public class Connection {
     DatabaseReference reference;
-    String path="";
+    String path;
 
     public Connection() {
+        path="release";
         if(BuildConfig.DEBUG){
             path="debug";
-        }else {
-            path="release";
         }
         reference = FirebaseDatabase.getInstance().getReference(path);
     }
@@ -23,5 +22,9 @@ public class Connection {
 
     public DatabaseReference getDbSchool() {
         return reference.child("school");
+    }
+
+    public DatabaseReference getFaqs() {
+        return reference.child("faqs");
     }
 }

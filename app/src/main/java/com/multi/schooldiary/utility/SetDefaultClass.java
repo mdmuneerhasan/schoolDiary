@@ -1,10 +1,12 @@
 package com.multi.schooldiary.utility;
 
+import java.util.Comparator;
+
 public class SetDefaultClass {
     String schoolName,position,stClass,schoolId;
     Boolean permission;
-    String uid,rollNo;
-
+    String uid,rollNo,name;
+    String sid;
     public SetDefaultClass() {
     }
 
@@ -14,6 +16,16 @@ public class SetDefaultClass {
         this.stClass = stClass;
         this.schoolId = schoolId;
     }
+    public static Comparator<SetDefaultClass> rollNoSort = new Comparator<SetDefaultClass>() {
+
+        public int compare(SetDefaultClass s1, SetDefaultClass s2) {
+            try{
+                return Integer.parseInt(s1.rollNo)-Integer.parseInt(s2.rollNo);
+            }catch (Exception e){
+                return s1.rollNo.compareTo(s2.rollNo);
+            }
+        }};
+
 
     public String getSchoolName() {
         return schoolName;
@@ -37,6 +49,22 @@ public class SetDefaultClass {
 
     public void setRollNo(String rollNo) {
         this.rollNo = rollNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 
     public void setUid(String uid) {
@@ -70,4 +98,5 @@ public class SetDefaultClass {
     public void setSchoolId(String schoolId) {
         this.schoolId = schoolId;
     }
+
 }

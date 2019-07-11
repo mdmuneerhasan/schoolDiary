@@ -3,7 +3,7 @@ public class User {
     String name;
     String standard;
     String type;
-    String school;
+    String school,schoolId;
     String uid,sid;
     String number;
     String photoUrl,email,rollNo;
@@ -60,6 +60,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public void setPhotoUrl(String photoUrl) {

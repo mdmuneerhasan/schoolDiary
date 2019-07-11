@@ -1,47 +1,34 @@
 package com.multi.schooldiary.utility;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.widget.Toast;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.multi.schooldiary.BuildConfig;
 
 public class Storage {
-    SharedPreferences  sharedPreferences;
-    SharedPreferences.Editor editor;
-    Context context;
-    ProgressDialog progressDialog;
+    StorageReference reference;
+    String path;
 
-    public Storage(Context context) {
-        this.context = context;
-        sharedPreferences=context.getSharedPreferences("store",Context.MODE_PRIVATE);
-        editor=sharedPreferences.edit();
-        progressDialog=new ProgressDialog(context);
-
+    public Storage() {
+        path="release";
+        if(BuildConfig.DEBUG){
+            path="debug";
+        }
+        reference = FirebaseStorage.getInstance().getReference(path);
     }
 
-    public String getValue(String key) {
-        return sharedPreferences.getString(key,null);
+    public StorageReference getUserStorage() {
+        return reference.child("user");
     }
 
-    public void setValue(String key,String value) {
-        editor.putString(key,value);
-        editor.commit();
+    public StorageReference getSchoolStorage() {
+        return reference.child("school");
     }
 
-
-    public void removeAlert() {
-        progressDialog.dismiss();
+    public StorageReference getReference() {
+        return FirebaseStorage.getInstance().getReference();
     }
 
-    public void showAlert(String message) {
-        progressDialog.setMessage(message);
-        progressDialog.show();
-    }
-
-    public void test(String message) {
-        Toast.makeText(context,message,Toast.LENGTH_LONG).show();
-    }
-    public void toast(String message) {
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+    public FirebaseStorage getInsatance() {
+        return FirebaseStorage.getInstance();
     }
 }

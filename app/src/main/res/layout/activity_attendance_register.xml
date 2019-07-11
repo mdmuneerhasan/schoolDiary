@@ -4,20 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teacher.AttendanceRegisterActivity">
+    tools:context=".dashboard.teacher.AttendanceRegisterActivity">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        />
+
+    <TextView
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate"
+        android:background="@color/white"
+        android:padding="@dimen/small_margin"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:id="@+id/linearLayout1"
+        android:layout_below="@id/tvDate"
         >
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginRight="@dimen/small_margin"
             >
             <TextView
                 android:layout_width="match_parent"
@@ -32,10 +51,20 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="0dp"
+            android:background="@color/black"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/recycle"
             />
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout1"
+        android:text="export to pdf"
+        android:onClick="exportActivity"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>
 </ScrollView>

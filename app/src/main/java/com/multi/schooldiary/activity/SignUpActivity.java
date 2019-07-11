@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,7 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.multi.schooldiary.R;
 import com.multi.schooldiary.utility.Connection;
-import com.multi.schooldiary.utility.Storage;
+import com.multi.schooldiary.utility.SavedData;
 import com.multi.schooldiary.utility.User;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -36,15 +35,17 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     User user1;
-    Storage storage;
-    String sid;
+    SavedData savedData;
     Connection connection;
+    ValueEventListener valueEventListener2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         connection=new Connection();
-        storage = new Storage(this);
+        savedData = new SavedData(this);
+        savedData.setValue("position","6");
+        savedData.setValue("schoolName","Schooly App Project - Starz developer console");
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_id))
                 .requestEmail().build();
@@ -52,6 +53,33 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
 //        signIn();
 
+        valueEventListener2=new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user2=dataSnapshot.getValue(User.class);
+                if(user2==null){
+                    connection.getDbUser().child(user.getUid()).setValue(user1);
+                    savedData.setValue("uid",user.getUid());
+                    savedData.setValue("name",user.getDisplayName());
+                    savedData.setValue("email",user.getEmail());
+                    savedData.setValue("number",user.getPhoneNumber());
+                    savedData.setValue("photoUrl",String.valueOf(user.getPhotoUrl()));
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                }else{
+                    savedData.setValue("sid",user2.getSid());
+                    savedData.setValue("uid",user2.getUid());
+                    savedData.setValue("name",user2.getName());
+                    savedData.setValue("email",user2.getEmail());
+                    savedData.setValue("number",user2.getNumber());
+                    savedData.setValue("photoUrl",String.valueOf(user2.getPhotoUrl()));
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                }
+                finish();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
     }
 
     private void signIn() {
@@ -62,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
-            storage.showAlert("connecting...");
+            savedData.showAlert("connecting...");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -96,63 +124,22 @@ public class SignUpActivity extends AppCompatActivity {
         if(user3==null){
             return;
         }
-
         user=user3;
         user1=new User(user.getDisplayName(),"none","none","none",user.getUid(),user.getPhoneNumber(),String.valueOf(user.getPhotoUrl()));
         user1.setEmail(user.getEmail());
-        // getting sid
-        connection.getDbUser().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    sid= "s0"+String.valueOf(dataSnapshot.getChildrenCount());
-                }catch (Exception e){
-                    sid= "s00";
-                }
-
-                connection.getDbUser().child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        User user2=dataSnapshot.getValue(User.class);
-                        if(user2==null){
-                            user1.setSid(sid);
-                            connection.getDbUser().child(user.getUid()).setValue(user1);
-                            connection.getDbUser().child(sid).child("name").setValue(user1.getName());
-                            connection.getDbUser().child(sid).child("uid").setValue(user1.getUid());
-                            storage.setValue("sid",sid);
-                            storage.setValue("uid",user.getUid());
-                            storage.setValue("name",user.getDisplayName());
-                            storage.setValue("email",user.getEmail());
-                            storage.setValue("number",user.getPhoneNumber());
-                            storage.setValue("photoUrl",String.valueOf(user.getPhotoUrl()));
-                            startActivity(new Intent(getBaseContext(), MainActivity.class));
-                        }else{
-                            storage.setValue("sid",user2.getSid());
-                            storage.setValue("uid",user2.getUid());
-                            storage.setValue("name",user2.getName());
-                            storage.setValue("email",user2.getEmail());
-                            storage.setValue("number",user2.getNumber());
-                            storage.setValue("photoUrl",String.valueOf(user2.getPhotoUrl()));
-                            startActivity(new Intent(getBaseContext(), MainActivity.class));
-                        }
-                        finish();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        user1.setSid(user3.getUid());
+        connection.getDbUser().child(user.getUid()).addListenerForSingleValueEvent(valueEventListener2);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         signIn();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        connection.getDbUser().child(user.getUid()).removeEventListener(valueEventListener2);
     }
 }

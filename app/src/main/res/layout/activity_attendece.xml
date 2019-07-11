@@ -4,16 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teacher.AttendanceActivity"
+    tools:context=".dashboard.teacher.AttendanceActivity"
     android:layout_margin="@dimen/small_margin"
     android:orientation="vertical"
     >
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/rdGroup"
+        >
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="First Half"
+            android:layout_weight="1"
+            android:id="@+id/firstHalf"
+            android:checked="true"
+            />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Second Half"
+            android:layout_weight="1"
+            android:id="@+id/secondHalf"
+            />
+    </RadioGroup>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvDate"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/red"
         />
     <LinearLayout
         android:layout_width="match_parent"

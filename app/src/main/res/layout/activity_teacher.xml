@@ -4,13 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teacher.TeacherActivity">
+    tools:context=".dashboard.teacher.TeacherActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,16 +24,28 @@
             android:layout_margin="@dimen/small_margin"
             android:onClick="Attendance"
             />
-
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Attendance Register"
+            android:text="Today's Attendance"
+            android:layout_margin="@dimen/small_margin"
+            android:onClick="attendanceToday"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All day's attendance"
             android:layout_margin="@dimen/small_margin"
             android:onClick="AttendanceRegister"
             />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage class"
+            android:layout_margin="@dimen/small_margin"
+            android:onClick="manageClass"
+            />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,14 +59,6 @@
             android:text="Guardian Request"
             android:layout_margin="@dimen/small_margin"
             android:onClick="guardianRequest"
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Manage class"
-            android:layout_margin="@dimen/small_margin"
-            android:onClick="manageClass"
             />
 
     </LinearLayout>

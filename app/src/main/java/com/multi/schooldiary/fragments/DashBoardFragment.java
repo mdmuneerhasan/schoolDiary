@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.multi.schooldiary.R;
-import com.multi.schooldiary.principal.PrincipalActivity;
-import com.multi.schooldiary.student_or_guardian.StudentGuardianActivity;
-import com.multi.schooldiary.teacher.TeacherActivity;
-import com.multi.schooldiary.utility.Storage;
+import com.multi.schooldiary.activity.SetDefaultActivity;
+import com.multi.schooldiary.dashboard.principal.PrincipalActivity;
+import com.multi.schooldiary.dashboard.student_or_guardian.StudentGuardianActivity;
+import com.multi.schooldiary.dashboard.teacher.TeacherActivity;
+import com.multi.schooldiary.utility.SavedData;
 
 public class DashBoardFragment extends Fragment {
     @Nullable
@@ -25,17 +26,19 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Storage storage=new Storage(getContext());
-        if(storage.getValue("position")==null){
-            storage.toast("please set defaults");
-        }else if(Integer.parseInt(storage.getValue("position"))>=6){
+        SavedData savedData =new SavedData(getContext());
+        savedData.setValue("progress","3");
+        if(savedData.getValue("position")==null){
+            savedData.toast("please set defaults");
+        }else if(Integer.parseInt(savedData.getValue("position"))>=6){
             startActivity(new Intent(getContext(), PrincipalActivity.class));
-        }else if(Integer.parseInt(storage.getValue("position"))>=5){
+        }else if(Integer.parseInt(savedData.getValue("position"))>=5){
             startActivity(new Intent(getContext(), TeacherActivity.class));
-        }else if(Integer.parseInt(storage.getValue("position"))>=2){
+        }else if(Integer.parseInt(savedData.getValue("position"))>=2){
             startActivity(new Intent(getContext(), StudentGuardianActivity.class));
         }else{
-            storage.toast("please set defaults ");
+            startActivity(new Intent(getContext(), SetDefaultActivity.class));
+            savedData.toast("please set defaults ");
         }
     }
 }

@@ -9,20 +9,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.multi.schooldiary.R;
 import com.multi.schooldiary.utility.SetDefaultClass;
-import com.multi.schooldiary.utility.Storage;
+import com.multi.schooldiary.utility.SavedData;
 
 import java.util.ArrayList;
 
 public class SetDefaultAdapter extends RecyclerView.Adapter<SetDefaultAdapter.Holder> {
     ArrayList<SetDefaultClass> list;
     Context context;
-    Storage storage;
+    SavedData savedData;
     Click click;
     public SetDefaultAdapter(Context context, Click click,ArrayList<SetDefaultClass> list) {
         this.list = list;
         this.click=click;
         this.context = context;
-        storage=new Storage(context);
+        savedData =new SavedData(context);
     }
 
     @NonNull
@@ -44,8 +44,8 @@ public class SetDefaultAdapter extends RecyclerView.Adapter<SetDefaultAdapter.Ho
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        public TextView tvName,tvPosition;
-        public Button btn1,btn2,btn3,btn4;
+        public TextView btn1,tvName,tvPosition;
+        public Button btn2,btn3,btn4;
         public Holder(@NonNull View itemView) {
             super(itemView);
             tvName=itemView.findViewById(R.id.tvName);
