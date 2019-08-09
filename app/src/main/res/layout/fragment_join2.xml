@@ -16,12 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rd2"
-            android:text="join school as student"
+            android:text="join schoolName as student"
             />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="join school as Teacher "
+            android:text="join schoolName as Teacher "
             android:id="@+id/rd3"
             />
         <RadioButton
@@ -34,7 +34,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="create school account"
+            android:text="create schoolName account"
             android:id="@+id/rd1"
             />
     </RadioGroup>

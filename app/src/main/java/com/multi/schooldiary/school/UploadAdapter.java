@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.multi.schooldiary.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

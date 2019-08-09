@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycle"
+        android:layout_centerHorizontal="true"
+        />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/small_margin"
+        android:backgroundTint="@color/yellow"
+        android:id="@+id/btnFloating"
+        />
+
+
+
+    <android.support.v7.widget.CardView
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/card"
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
+            android:background="@drawable/circlebackgroundpurpule"
+            android:layout_margin="@dimen/small_margin"
+            android:id="@+id/photoPicker"
+            android:padding="@dimen/small_margin"
+            android:onClick="pick"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/photoPicker"
+            android:layout_margin="@dimen/small_margin"
+            android:id="@+id/cvTitle"
+            android:layout_alignEnd="@id/cvDescription"
+            android:theme="@style/EditTextHint"
+            style="@style/EditTextHint"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_input_layout_height"
+                android:hint="Title"
+                android:id="@+id/edtTitle"
+                android:background="@drawable/edit_text_background"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photoPicker"
+            android:layout_margin="@dimen/small_margin"
+            android:id="@+id/cvDescription"
+            style="@style/EditTextHint"
+            android:theme="@style/EditTextHint"
+            >
+            <EditText
+                android:layout_width="256dp"
+                android:layout_height="@dimen/text_input_layout_height"
+                android:hint="Description"
+                android:id="@+id/edtDescription"
+                android:background="@drawable/edit_text_background"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cvDescription"
+            android:layout_alignEnd="@id/cvDescription"
+            android:layout_alignStart="@id/cvDescription"
+            android:layout_margin="@dimen/small_margin"
+            android:text="post"
+            android:id="@+id/btnPost"
+            android:onClick="post"
+            android:background="@drawable/button_background"
+            />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>

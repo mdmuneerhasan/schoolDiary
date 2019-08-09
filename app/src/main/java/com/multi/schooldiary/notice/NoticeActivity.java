@@ -93,7 +93,5 @@ public class NoticeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
     }
 }

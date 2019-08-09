@@ -70,7 +70,6 @@ public class TimeTableActivity extends AppCompatActivity {
         fragmentArrayList=new ArrayList<>();
         fragmentManager=getSupportFragmentManager();
         viewPager=findViewById(R.id.vpPager);
-        viewPager.setOffscreenPageLimit(3);
         fragmentArrayList.add(new TSun());
         fragmentArrayList.add(new TMon());
         fragmentArrayList.add(new TTue());

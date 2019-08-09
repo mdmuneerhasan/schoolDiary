@@ -30,6 +30,7 @@ import com.multi.schooldiary.utility.BiHashMap;
 import com.multi.schooldiary.utility.Connection;
 import com.multi.schooldiary.utility.SavedData;
 import com.multi.schooldiary.utility.SetDefaultClass;
+import com.squareup.picasso.Callback;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -70,7 +71,6 @@ public class ExportToPdfActivity extends AppCompatActivity {
         month=new SimpleDateFormat("yyyy-MM").format(date1);
         TextView tvDate=findViewById(R.id.tvDate);
         tvDate.setText("Attendance sheet of "+new SimpleDateFormat("MMM-yyyy").format(date1));
-        checkStoragePermission();
         MyToolBar myToolBar= new MyToolBar((Toolbar) findViewById(R.id.toolbar), this) {
             @Override
             public void onAlertActionPerformed() {
@@ -78,30 +78,6 @@ public class ExportToPdfActivity extends AppCompatActivity {
         };
         setSupportActionBar(myToolBar.getToolBar());
 
-    }
-
-    private void checkStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-                savedData.toast("Please grant savedData permission to create and save pdf file");
-                }
-                return;
-            }
-        }
     }
 
 
@@ -212,15 +188,41 @@ public class ExportToPdfActivity extends AppCompatActivity {
     }
 
     public void creteA4Size(View view) {
-        checkStoragePermission();
-        savedData.showAlert("creating your pdf");
-        createA4Pdf();
+        if(savedData.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, new Callback() {
+            @Override
+            public void onSuccess() {
+                registerSize(new View(getBaseContext()));
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        })){
+            savedData.showAlert("creating your pdf");
+            createA4Pdf();
+        }else {
+            return;
+        }
     }
 
     public void registerSize(View view) {
-        checkStoragePermission();
-        savedData.showAlert("creating your pdf");
-        createRegisterPdf();
+        if(savedData.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, new Callback() {
+            @Override
+            public void onSuccess() {
+                registerSize(new View(getBaseContext()));
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        })){
+            savedData.showAlert("creating your pdf");
+            createRegisterPdf();
+        }else {
+            return;
+        }
     }
 
     private void createRegisterPdf() {

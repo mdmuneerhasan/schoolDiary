@@ -4,27 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".options.ConsoleActivity">
+    tools:context=".options.ConsoleActivity"
+    android:id="@+id/scrollView"
+    >
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="384dp">
-
-
-
-        </LinearLayout>
-    </LinearLayout>
-
     <LinearLayout
         android:clipToPadding="false"
         android:gravity="center"
@@ -45,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:id="@+id/tvHome"
+                android:id="@+id/tvSchool"
                 >
                 <ImageView
                     android:layout_width="64dp"
@@ -58,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="My School"/>
+                    android:text="School"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -68,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Check your school events and activities"
+                    android:text="Create school account"
                     android:padding="5dp"
                     android:textColor="@android:color/darker_gray"/>
             </LinearLayout>
@@ -85,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:id="@+id/tvTimeTable"
+                android:id="@+id/tvCollege"
                 >
                 <ImageView
                     android:layout_width="64dp"
@@ -98,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Time Table"/>
+                    android:text="College"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -108,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Check your class time table"
+                    android:text="Create college account"
                     android:padding="5dp"
                     android:textColor="@android:color/darker_gray"/>
 
@@ -126,19 +114,20 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/tvIndividual"
                 >
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@color/yellow"
-                    android:src="@drawable/ic_settings_black_24dp"
+                    android:src="@drawable/ic_account_circle_black_24dp"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Time Table"/>
+                    android:text="Individual"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -148,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Check your class time table"
+                    android:text="Coaching or individual"
                     android:padding="5dp"
                     android:textColor="@android:color/darker_gray"/>
 
@@ -156,6 +145,214 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="384dp"
+        android:orientation="horizontal"
+        >
+        <android.support.v7.widget.CardView
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:id="@+id/cv1"
+            android:translationX="-1256dp"
+            >
+            <!--
+            schoolName
+            -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="School Account"
+                    android:textSize="@dimen/large_margin"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cerclebackgroundpurple"
+                    android:src="@drawable/ic_add_a_photo_black_24dp"
+                    android:padding="10dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:id="@+id/imgSchool"
+                    />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    android:hint="School Name"
+                    style="@style/EditTextHint"
+                    android:theme="@style/EditTextHint"
+                    >
+                    <EditText
+                        android:layout_width="256dp"
+                        android:layout_height="@dimen/text_input_layout_height"
+                        android:id="@+id/edtSchoolName"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/btnSchool"
+                    android:text="create school account"
+                    android:ems="15"
+                    android:layout_margin="@dimen/small_margin"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--
+        ui 2
+        -->
+        <android.support.v7.widget.CardView
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:id="@+id/cv2"
+            android:translationX="1256dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="College Account"
+                    android:textSize="@dimen/large_margin"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cerclebackgroundpurple"
+                    android:src="@drawable/ic_add_a_photo_black_24dp"
+                    android:padding="10dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:id="@+id/imgCollege"
+                    />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    android:hint="College Name"
+                    style="@style/EditTextHint"
+                    android:theme="@style/EditTextHint"
+                    >
+                    <EditText
+                        android:layout_width="256dp"
+                        android:layout_height="@dimen/text_input_layout_height"
+                        android:id="@+id/edtCollegeName"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    android:hint="Department Name"
+                    style="@style/EditTextHint"
+                    android:theme="@style/EditTextHint"
+                    >
+                    <EditText
+                        android:layout_width="256dp"
+                        android:layout_height="@dimen/text_input_layout_height"
+                        android:id="@+id/edtDepartment"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:text="create college account"
+                    android:ems="15"
+                    android:layout_margin="@dimen/small_margin"
+                    android:id="@+id/btnCollege"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--
+                ui 3
+                -->
+
+        <android.support.v7.widget.CardView
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:id="@+id/cv3"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Coaching Account"
+                    android:textSize="@dimen/large_margin"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/cerclebackgroundpurple"
+                    android:src="@drawable/ic_add_a_photo_black_24dp"
+                    android:padding="10dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:id="@+id/imgCoaching"
+                    />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    android:hint="Coaching Name"
+                    style="@style/EditTextHint"
+                    android:theme="@style/EditTextHint"
+                    >
+                    <EditText
+                        android:layout_width="256dp"
+                        android:layout_height="@dimen/text_input_layout_height"
+                        android:id="@+id/edtCoachingName"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:text="create coaching account"
+                    android:ems="15"
+                    android:layout_margin="@dimen/small_margin"
+                    android:id="@+id/btnCoaching"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+
 
 </LinearLayout>
 </ScrollView>

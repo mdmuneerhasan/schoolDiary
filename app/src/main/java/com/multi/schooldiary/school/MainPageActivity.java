@@ -1,7 +1,6 @@
 package com.multi.schooldiary.school;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -16,7 +15,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,23 +24,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.multi.schooldiary.R;
 import com.multi.schooldiary.utility.Connection;
 import com.multi.schooldiary.utility.SavedData;
 import com.multi.schooldiary.utility.Storage;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import static com.multi.schooldiary.R.*;
+
 public class MainPageActivity extends AppCompatActivity {
     private static final int PICK_REQUEST = 1234;
-    ImageButton btnPicker;
+    ImageView btnPicker;
     Button btnPost;
     EditText edtDescription,edtTitle;
     TextInputLayout cvTitle,cvDescription;
@@ -50,7 +50,7 @@ public class MainPageActivity extends AppCompatActivity {
     Connection connection;
     SavedData savedData;
     Storage storage;
-    private Uri uri;
+    Uri parentUri;
     StorageTask uploadTask;
     private ArrayList<Upload> arrayList;
     UploadAdapter uploadAdapter;
@@ -59,14 +59,14 @@ public class MainPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
-        btnPost=findViewById(R.id.btnPost);
-        btnPicker=findViewById(R.id.photoPicker);
-        edtDescription=findViewById(R.id.edtDescription);
-        edtTitle=findViewById(R.id.edtTitle);
-        cvDescription=findViewById(R.id.cvDescription);
-        cvTitle=findViewById(R.id.cvTitle);
-        cardView=findViewById(R.id.card);
+        setContentView(layout.activity_main_page);
+        btnPost=findViewById(id.btnPost);
+        btnPicker=findViewById(id.photoPicker);
+        edtDescription=findViewById(id.edtDescription);
+        edtTitle=findViewById(id.edtTitle);
+        cvDescription=findViewById(id.cvDescription);
+        cvTitle=findViewById(id.cvTitle);
+        cardView=findViewById(id.card);
         connection=new Connection();
         savedData =new SavedData(this);
         storage=new Storage();
@@ -111,7 +111,7 @@ public class MainPageActivity extends AppCompatActivity {
 
             }
         };
-        recyclerView=findViewById(R.id.recycle);
+        recyclerView=findViewById(id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(uploadAdapter);
 
@@ -125,6 +125,8 @@ public class MainPageActivity extends AppCompatActivity {
                     arrayList.add(0,upload);
                 }
                 uploadAdapter.notifyDataSetChanged();
+                connection.getDbSchool().child(savedData.getValue("schoolId")).child("events")
+                        .removeEventListener(valueEventListener);
             }
 
             @Override
@@ -162,14 +164,29 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     public void post(View view) {
-        if(uploadTask!=null && uploadTask.isInProgress()){
-            savedData.toast("uploading your file!!");
+        if (!savedData.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE,this,new Callback(){
+            @Override
+            public void onSuccess() {
+                post(new View(getBaseContext()));
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+        })) {
             return;
         }
-        if (uri!=null){
+        if(uploadTask!=null && uploadTask.isInProgress()){
+            savedData.toast("uploading your file!!");
             popUp(new View(this));
-            uploadTask=storage.getSchoolStorage().child(savedData.getValue("schoolId")).child("events")
-                    .child(System.currentTimeMillis()+"."+getExtension(uri)).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            return;
+        }
+        if (parentUri !=null){
+            savedData.toast("Uploading your post");
+            popUp(new View(this));
+            uploadTask=storage.getSchoolStorage().child("store")
+                    .child(savedData.getValue("uid")+System.currentTimeMillis()+"."+getExtension(parentUri)).putFile(parentUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
@@ -192,8 +209,8 @@ public class MainPageActivity extends AppCompatActivity {
                             recyclerView.scrollToPosition(0);
                             edtTitle.setText("");
                             edtDescription.setText("");
-                            btnPicker.setImageURI(null);
-
+                            Picasso.get().load(drawable.ic_add_a_photo_black_24dp).into(btnPicker);
+                            parentUri=null;
                         }
                     });
 
@@ -251,7 +268,8 @@ public class MainPageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==PICK_REQUEST && resultCode==RESULT_OK&&data!=null && data.getData()!=null){
-            uri=data.getData();
+            parentUri =data.getData();
+            btnPicker.setPadding(0,0,0,0);
             Picasso.get().load(data.getData()).into(btnPicker);
         }
     }
@@ -265,7 +283,5 @@ public class MainPageActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        connection.getDbSchool().child(savedData.getValue("schoolId")).child("events")
-                .removeEventListener(valueEventListener);
         }
 }

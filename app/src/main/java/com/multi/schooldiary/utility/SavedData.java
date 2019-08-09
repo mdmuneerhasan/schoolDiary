@@ -1,24 +1,26 @@
 package com.multi.schooldiary.utility;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.multi.schooldiary.BuildConfig;
+import com.squareup.picasso.Callback;
 
-import java.text.SimpleDateFormat;
-
-public class SavedData {
+public class SavedData extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
     SharedPreferences  sharedPreferences;
     SharedPreferences.Editor editor;
     Context context;
     ProgressDialog progressDialog;
-
+    Callback callback;
     public SavedData(Context context) {
         this.context = context;
         sharedPreferences=context.getSharedPreferences("store",Context.MODE_PRIVATE);
@@ -62,9 +64,9 @@ public class SavedData {
 
     public String getType() {
         if(getValue("deptType")==null){
-            return "school";
-        }else if(getValue("deptType").equals("school")){
-            return "school";
+            return "schoolName";
+        }else if(getValue("deptType").equals("schoolName")){
+            return "schoolName";
         }else {
             return getValue("uid");
         }
@@ -81,9 +83,6 @@ public class SavedData {
         editor.commit();
     }
 
-    public String getDefault() {
-        return getValue("default");
-    }
 
     public boolean haveValue(String key) {
         return !getValue(key).equals(getValue("default"));
@@ -93,9 +92,44 @@ public class SavedData {
         Log.e(context.getClass().getSimpleName(),message);
     }
 
+    public boolean hasPermission(String permission, Activity activity, Callback callback) {
+        this.callback=callback;
+        if (ContextCompat.checkSelfPermission(context,permission )
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{permission},
+                    MY_PERMISSIONS_REQUEST_CODE);
+           return false;
+        }else{
+            return true;
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    callback.onSuccess();
+                } else {
+                    Exception e=new Exception(){
+                        @Override
+                        public String getMessage() {
+                            return "permission not granted";
+                        }
+                    };
+                    callback.onError(e);
+                toast("please provide the required permission");
+                }
+                return;
+            }
+        }
+    }
+
 
 //    private void popUp() {
-//        if (!storage.getType().equals("school")) {
+//        if (!storage.getPosition().equals("schoolName")) {
 //            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //            builder.setItems(new CharSequence[]
 //                            {"1st year", "2nd year", "3rd year", "4th year", "5th year", "6th year", "7th year", "other"},

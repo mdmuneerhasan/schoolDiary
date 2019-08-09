@@ -108,7 +108,6 @@ public class NoticeConsoleActivity extends AppCompatActivity {
         }else{
             connection.getDbSchool().child(savedData.getValue("schoolId")).child("notice").child(key).setValue(notice);
         }
-        startActivity(new Intent(this, NoticeActivity.class));
         finish();
     }
 
@@ -120,10 +119,5 @@ public class NoticeConsoleActivity extends AppCompatActivity {
             finish();
 
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this,NoticeActivity.class));
     }
 }

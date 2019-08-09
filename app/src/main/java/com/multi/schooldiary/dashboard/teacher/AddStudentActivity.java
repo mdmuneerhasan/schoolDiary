@@ -58,8 +58,10 @@ public class AddStudentActivity extends AppCompatActivity {
                 }
                 user.setSid(sid);
                 user.setUid(sid);
+                user.setPosition("2");
                 user.setSchoolId(savedData.getValue("schoolId"));
-                user.setStandard(savedData.getValue("stClass"));
+                user.setSchoolName(savedData.getValue("schoolName"));
+                user.setStClass(savedData.getValue("stClass"));
                 connection.getDbUser().child(user.getSid()).setValue(user);
                 connection.getDbUser().removeEventListener(valueEventListener1);
 

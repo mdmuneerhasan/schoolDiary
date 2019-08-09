@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.multi.schooldiary">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE " />
@@ -14,18 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".options.ConsoleActivity"></activity>
+        <activity android:name=".services.shop.ShopConsoleActivity"></activity>
+        <activity android:name=".services.ServiceActivity" />
+        <activity android:name=".options.ConsoleActivity" />
         <activity android:name=".school.MainPageActivity" />
         <activity android:name=".timetable.TimeTableActivity" />
         <activity android:name=".timetable.TimeTableActivityConsole" />
         <activity android:name=".options.FaqsActivity" />
-        <activity android:name=".dashboard.student_or_guardian.StudentJoinFragmentActivity" />
         <activity android:name=".notice.NoticeActivity" />
         <activity android:name=".notice.NoticeConsoleActivity" />
         <activity android:name=".options.SettingActivity" />
-        <activity android:name=".dashboard.principal.CollegeFragmentActivity" />
-        <activity android:name=".dashboard.principal.SchoolFragmentActivity" />
-        <activity android:name=".dashboard.teacher.TeacherFragmentActivity" />
         <activity android:name=".notification.NotificationControlActivity" />
         <activity android:name=".dashboard.teacher.AddStudentActivity" />
         <activity android:name=".dashboard.teacher.AttendanceRegisterActivity" />
@@ -52,7 +51,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

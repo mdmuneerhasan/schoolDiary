@@ -11,4 +11,5 @@
     <dimen name="register_text_size">24sp</dimen>
     <dimen name="switch_padding">256dp</dimen>
     <dimen name="elevation">1024dp</dimen>
+    <dimen name="text_input_layout_height">48dp</dimen>
 </resources>

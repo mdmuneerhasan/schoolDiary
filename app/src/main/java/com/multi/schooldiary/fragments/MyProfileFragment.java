@@ -21,7 +21,7 @@ import com.multi.schooldiary.utility.Connection;
 import com.multi.schooldiary.utility.SavedData;
 import com.squareup.picasso.Picasso;
 
-public class SetUpProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
     EditText edtName,edtNumber,edtUrl;
     SavedData savedData;
     String stName,stNumber;
@@ -30,7 +30,7 @@ public class SetUpProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_set_up_profile,container,false);
+        return inflater.inflate(R.layout.fragment_my_profile,container,false);
     }
 
     @Override

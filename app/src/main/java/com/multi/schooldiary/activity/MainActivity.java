@@ -27,9 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.multi.schooldiary.options.ConsoleActivity;
 import com.multi.schooldiary.options.FaqsActivity;
 import com.multi.schooldiary.fragments.DashBoardFragment;
-import com.multi.schooldiary.fragments.JoinFragment;
+import com.multi.schooldiary.fragments.SetUpFragment;
 import com.multi.schooldiary.fragments.MainFragment;
-import com.multi.schooldiary.fragments.SetUpProfileFragment;
+import com.multi.schooldiary.fragments.MyProfileFragment;
 import com.multi.schooldiary.R;
 import com.multi.schooldiary.notification.ExampleJobService;
 import com.multi.schooldiary.notification.NotificationControlActivity;
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity
         if(savedData.haveValue("name")){
             tvName2.setText(savedData.getValue("name"));
         }
-        frombottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
-       bgapp = findViewById(R.id.bgapp);
+            frombottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
+            bgapp = findViewById(R.id.bgapp);
             clover = findViewById(R.id.clover);
             textsplash =findViewById(R.id.textsplash);
             texthome = findViewById(R.id.texthome);
@@ -83,10 +83,8 @@ public class MainActivity extends AppCompatActivity
             bgapp.animate().translationY(-1400).setDuration(3000).setStartDelay(100);
             clover.animate().alpha(0).setDuration(3000).setStartDelay(1500);
             textsplash.animate().translationY(140).alpha(0).setDuration(3000).setStartDelay(1000);
-
-            texthome.startAnimation(frombottom);
             menus.animate().translationY(0).setDuration(2000).setStartDelay(1500);
-//            menus.startAnimation(frombottom);
+            texthome.startAnimation(frombottom);
 
         MyToolBar myToolBar= new MyToolBar((Toolbar) findViewById(R.id.toolbar), this) {
             @Override
@@ -181,14 +179,11 @@ public class MainActivity extends AppCompatActivity
 
     private void check(){
         if(!savedData.haveValue("uid")){
+            savedData.log("no id");
             startActivity(new Intent(this,SignUpActivity.class));
         }else if(savedData.getValue("progress")==null){
             savedData.toast("please set default school");
             startActivity(new Intent(this,SetDefaultActivity.class));
-        }else if(savedData.getValue("progress").equals("1")){
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, new JoinFragment());
-            ft.commit();
         }
         if(savedData.getValue("schoolId")!=null && savedData.getValue("stClass")!=null){
             loadTimeTable();
@@ -298,12 +293,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         tvName.setText(savedData.getValue("name"));
-        tvEmail.setText("Id : "+ savedData.getValue("sid"));
+        if(savedData.getValue("number")!=null){
+            tvEmail.setText(savedData.getValue("number"));
+        }
         Picasso.get().load(savedData.getValue("photoUrl")).into(imageView);
         DrawerLayout drawer =findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if(i<1){
+            bgapp.animate().translationY(-1400).setDuration(500).setStartDelay(0);
+            menus.animate().translationY(0).setDuration(500).setStartDelay(100);
             ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.container, new MainFragment());
             ft.commit();
@@ -315,15 +314,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+        bgapp.animate().translationY(-1400).setDuration(500).setStartDelay(0);
+        menus.animate().translationY(0).setDuration(500).setStartDelay(100);
         i=0;
         int id = v.getId();
         if (id == R.id.profile) {
             ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, new SetUpProfileFragment());
+            ft.replace(R.id.container, new MyProfileFragment());
             ft.commit();
         } else if (id == R.id.join) {
+
+            bgapp.animate().translationY(-1900).setDuration(1000).setStartDelay(200);
+            menus.animate().translationY(-500).setDuration(1000).setStartDelay(400);
             ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, new JoinFragment());
+            ft.replace(R.id.container, new SetUpFragment());
             ft.commit();
         } else if (id == R.id.dashBoard) {
             ft = getSupportFragmentManager().beginTransaction();
@@ -346,6 +350,5 @@ public class MainActivity extends AppCompatActivity
         }
         DrawerLayout drawer =findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
     }
 }

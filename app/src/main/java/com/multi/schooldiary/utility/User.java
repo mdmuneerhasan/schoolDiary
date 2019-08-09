@@ -1,23 +1,29 @@
 package com.multi.schooldiary.utility;
 public class User {
     String name;
-    String standard;
-    String type;
-    String school,schoolId;
+    String stClass;
+    String position;
+    String schoolName,schoolId;
     String uid,sid;
     String number;
     String photoUrl,email,rollNo;
 
-    public User(String name, String standard, String type, String school, String uid, String number,String url) {
+    public User(String name, String stClass, String position, String schoolName, String uid, String number, String url) {
         this.name = name;
-        this.standard = standard;
-        this.type = type;
-        this.school = school;
+        this.stClass = stClass;
+        this.position = position;
+        this.schoolName = schoolName;
         this.uid = uid;
         this.number = number;
         this.photoUrl=url;
     }
 
+
+    public User(String name, String uid, String photoUrl) {
+        this.name = name;
+        this.uid = uid;
+        this.photoUrl = photoUrl;
+    }
 
     public User() {
     }
@@ -34,7 +40,7 @@ public class User {
         return sid;
     }
 
-    public void setSid(String sid) {
+   public void setSid(String sid) {
         this.sid = sid;
     }
 
@@ -46,8 +52,8 @@ public class User {
         this.name = name;
     }
 
-    public String getStandard() {
-        return standard;
+    public String getStClass() {
+        return stClass;
     }
 
     public String getPhotoUrl() {
@@ -74,24 +80,24 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public void setStClass(String stClass) {
+        this.stClass = stClass;
     }
 
-    public String getType() {
-        return type;
+    public String getPosition() {
+        return position;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public String getSchool() {
-        return school;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public String getUid() {

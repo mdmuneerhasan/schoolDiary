@@ -9,7 +9,9 @@ public class BiHashMap<K1, K2, V> {
     private final Map<K1, Map<K2, V>> mMap;
 
     public BiHashMap() {
-        mMap = new HashMap<K1, Map<K2, V>>();
+        mMap = new HashMap<>();
+//        mMap = new HashMap<K1, Map<K2, V>>();
+
 
     }
 
